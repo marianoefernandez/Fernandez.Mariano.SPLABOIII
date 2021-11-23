@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./js/scripts.js" type="module" defer></script>
+    <link rel="stylesheet" href="./css/estilos.css">
+    <script src="./js/bootstrap.js" type="module" defer></script>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <title>Administracion</title>
+</head> 
+<body>
+    <header id="administracion">
+        <a href="./index.html">
+            <img src="./img/Logo.png" id="LogoPrincipal" alt="logo página">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#">Nosotros</a></li>
+                <li><a href="./index.html">Anuncios</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+        <h1>Administracion</h1>
+        
+        <img src="./img/Encabezado.jpg" alt="Encabezado" id="encabezado">
+
+        <section class="formAnuncio">
+            <form>
+                <fieldset>
+                    <legend>Informacion del anuncio</legend>
+                    
+                    <div class="form-group">
+                        <label for="txtTitulo">Titulo:</label>
+                    <br>
+                    <input 
+                        class="form-control"
+                        type="text" 
+                        name="txtTitulo" 
+                        placeholder="Titulo" 
+                        autocomplete="off"
+                        required placeholder="Ingrese nombre"
+                        oninvalid="this.setCustomValidity('Por favor ingresa un nombre, este parametro no puede quedar vacio')"
+                        oninput="this.setCustomValidity('')"              
+                    />
+                    <br><br>
+                    
+                    <label for="rdoTransaccion">Transaccion:</label>
+                    <br>
+
+                    <label for="rdoTransaccion">Venta</label>
+
+                    <input 
+                        type="radio" 
+                        name="rdoTransaccion" 
+                        class="transaccion"
+                        value="Venta" 
+                        checked> 
+                    <label for="rdoTransaccion">Alquiler</label>
+                    <input 
+                        type="radio" 
+                        name="rdoTransaccion"
+                        class="transaccion"
+                        value="Alquiler"
+                        > 
+                <br><br>
+
+                <label for="txtDescripcion">Descripcion:</label>
+                <br>
+                <input 
+                    class="form-control"
+                    type="text" 
+                    name="txtDescripcion" 
+                    placeholder="Descripcion" 
+                    autocomplete="off"
+                    required placeholder="Ingrese Descripcion"
+                    oninvalid="this.setCustomValidity('Por favor ingresa una descripcion, este parametro no puede quedar vacio')"
+                    oninput="this.setCustomValidity('')"              
+                />
+
+                <br><br>
+
+                <label for="txtPrecio">Precio:</label>
+
+                <br>
+
+                <input
+                    class="form-control"
+                    type="number" 
+                    name="txtPrecio" 
+                    placeholder="Precio" 
+                    autocomplete="off"
+                    min="1"
+                    required placeholder="Ingrese precio"
+                    oninvalid="this.setCustomValidity('Por favor ingresa un precio mayor a cero, este parametro no puede quedar vacio')"
+                    oninput="this.setCustomValidity('')"
+                />
+
+                <br><br>
+
+                <img src="./img/Puerta.png" alt="Puertas" class="iconos">
+
+
+                <input
+                    class="form-control"
+                    type="number" 
+                    name="txtPuertas" 
+                    placeholder="Puertas" 
+                    autocomplete="off"
+                    min="1"
+                    required placeholder="Ingrese cantidad de Puertas"
+                    oninvalid="this.setCustomValidity('Por favor ingresa una cantidad mayor a cero, este parametro no puede quedar vacio')"
+                    oninput="this.setCustomValidity('')"
+            />
+
+            <br><br>
+
+            <img src="./img/Velocimetro.png" alt="Kilometros" class="iconos">
+
+
+            <input
+                class="form-control"
+                type="number" 
+                name="txtKm" 
+                placeholder="KMs" 
+                autocomplete="off"
+                min="1"
+                required placeholder="Ingrese cantidad de kilometros"
+                oninvalid="this.setCustomValidity('Por favor ingresa una cantidad mayor a cero, este parametro no puede quedar vacio')"
+                oninput="this.setCustomValidity('')"
+            />
+            
+            <br><br>
+
+            <img src="./img/Motor.png" alt="Potencia" class="iconos">
+
+            <input
+                class="form-control"
+                type="number" 
+                name="txtPotencia" 
+                placeholder="Potencia" 
+                autocomplete="off"
+                min="1"
+                required placeholder="Ingrese cantidad de Potencia"
+                oninvalid="this.setCustomValidity('Por favor ingresa una cantidad mayor a cero, este parametro no puede quedar vacio')"
+                oninput="this.setCustomValidity('')"
+            />
+
+            <br>
+
+                    </div>
+                </fieldset>
+
+                <br>
+                <div>
+                    <input type="submit" value="Guardar" id="btnGuardar" class="botones">
+                    <input type="hidden" value="Eliminar" id="btnEliminar" class="botones">
+                    <input type="hidden" value="Cancelar" id="btnCancelar" class="botones">
+                    <input type="hidden" name="txtId">    
+                </div>
+            </form>
+        </section>
+    </main>
+    <div class="spinner"></div>
+    <h2>Lista de Autos</h2>
+    <section id="tablaSection">
+        <div id="divTabla" class="container"></div>
+    </section>
+    <div class="container">
+        <div id="divMensaje" class="row"> 
+        </div>
+    </div>
+
+    <br><br><br>
+
+    <section id="filtroSection">
+        <div id="filtroSelector" class="container">
+            <div class="col">
+                <h3>Filtros</h3>
+                <label for="selectorFiltro">Filtrar por:</label>
+                <select name="selectorFiltro" id="selectorFiltro"> 
+                    <option value="Todos" selected>Todos</option>
+                    <option value="Venta">Venta</option>
+                    <option value="Alquiler">Alquiler</option>
+                </select>
+                <label for="txtPromedio">Promedio:</label>
+                <input 
+                id="promedioPrecios"
+                type="number"
+                name="txtPromedio" 
+                readonly
+                />
+            </div>
+        </div>
+        <br><br>
+        <div id="filtroCheckbox">
+            <h3>Campos mostrados : Tildar los campos a mostrar</h3>
+        </div>
+        <br>
+        <div id="filtroTabla" class="container"></div>
+
+    </section>
+
+    <footer>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Nosotros</a></li>
+                <li><a href="./Administrador.html">Anuncios</a></li>
+                <li><a href="./index.html">Blog</a></li>
+                <li><a href="./index.html">Contacto</a></li>
+            </ul>
+        </nav>
+
+        <p>Todos los derechos reservados 2021 &copy;</p>
+    </footer>
+</body>
+</html>
