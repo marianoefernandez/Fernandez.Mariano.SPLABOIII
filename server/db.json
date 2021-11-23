@@ -1,34 +1,4 @@
 {
   "autos": [
-    {
-      "id": 4,
-      "titulo": "Audi R8",
-      "transaccion": "Venta",
-      "descripcion": "Auto de lujo de la marca alemana",
-      "precio": 440000,
-      "cantPuertas": 2,
-      "cantKm": 343,
-      "cantPotencia": 1851
-    },
-    {
-      "id": 6,
-      "titulo": "Chevrolet Corsa Classic (2013)",
-      "transaccion": "Venta",
-      "descripcion": "Chevrolet Classic 2013 en perfecto estado",
-      "precio": 1200,
-      "cantPuertas": 4,
-      "cantKm": 181,
-      "cantPotencia": 1125
-    },
-    {
-      "id": 8,
-      "titulo": "Peugeot 206",
-      "transaccion": "Alquiler",
-      "descripcion": "Peugeot 206 en perfecto estado",
-      "precio": 150,
-      "cantPuertas": 4,
-      "cantKm": 184,
-      "cantPotencia": 1213
-    }
   ]
 }

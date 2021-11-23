@@ -32,6 +32,7 @@ const $btnEliminar = document.getElementById("btnEliminar");
 const $btnCancelar = document.getElementById("btnCancelar");
 
 let idElementoABorrar=-1;
+let promedioAnterior=0;
 
 $formulario.addEventListener("submit",AgregarElemento);//Boton guardar/modificar
 $btnEliminar.addEventListener("click",EliminarElemento);//Boton Eliminar
@@ -41,7 +42,7 @@ cabecera.push(new Anuncio_Auto(0,"","","",0,0,0,0));//Para crear dinamicamente l
 $divCheckBoxFiltros.appendChild(CrearCheckBoxs(anuncios));
 anuncios.length > 0 ? ActualizarTabla(anuncios,$divTabla) : CrearThead(cabecera);
 listaFiltrada.length > 0 ? ActualizarTabla(listaFiltrada,$divTablaFiltros) : CrearThead(cabecera);
-CalcularPromedioDePrecio(anuncios);
+$promedioPrecios.value="N/A";
 
 $divCheckBoxFiltros.addEventListener('change',(e)=>
 {
@@ -444,7 +445,7 @@ async function CrearAnuncioServer(anuncio)
     }
 }
 
-//BORRAR FETCH
+//BORRAR FETCH CON PROMESAS
 
 function BorrarAnuncioServer(id)
 {
@@ -489,7 +490,7 @@ function ModificarAnuncioServer(anuncioAModificar)
     xhr.send(JSON.stringify(anuncioAModificar));
 }
 
-function ObtenerAnuncio(url,id)
+function ObtenerAnuncio(url,id)//Obtener un anuncio Axios con promesas
 {
     axios.get(url + "/" + id)
     .then(({data})=>console.log(data))
@@ -513,7 +514,6 @@ function ActualizarTablaPorTransaccion(transaccion)
         {
             listaFiltrada = InicializarLista("anuncios");
             transaccion != "Todos" ? listaFiltrada = listaFiltrada.filter((anuncio)=> anuncio.transaccion == transaccion) : listaFiltrada = listaFiltrada;
-            CalcularPromedioDePrecio(listaFiltrada);
             ManejarCheckBox();
             ActualizarTabla(listaFiltrada,$divTablaFiltros);
         }
@@ -524,24 +524,39 @@ function ActualizarTablaPorTransaccion(transaccion)
         const $p = document.createElement("p");
         $p.textContent = ("No hay elementos en la lista para la transacción " + transaccion);
         $divTablaFiltros.appendChild($p);
-        CalcularPromedioDePrecio(listaFiltrada);
     }
+
+    transaccion!="Todos" ? CalcularPromedioDePrecio(listaFiltrada) : $promedioPrecios.value="N/A"
+
 }
 
 function CalcularPromedioDePrecio(lista)
 {
+    let nuevaListaTemporal = InicializarLista("anuncios");
     $promedioPrecios.value = 0;
 
     if(lista.length>0)
     {
-        $promedioPrecios.value = lista.reduce((acumulador,actual)=>
+        if((lista[0].hasOwnProperty('precio')))
         {
-            return (acumulador + actual.precio);
-        },0) / lista.length;
+            $promedioPrecios.value = lista.reduce((acumulador,actual)=>
+            {
+                return (acumulador + actual.precio);
+            },0) / lista.length;
+        }
+        else//Por si en el checkbox deselecciono el precio
+        {
+            nuevaListaTemporal = nuevaListaTemporal.filter((anuncio)=> anuncio.transaccion == $selectFiltro.value);
+
+            $promedioPrecios.value = nuevaListaTemporal.reduce((acumulador,actual)=>
+            {
+                return (acumulador + actual.precio);
+            },0) / lista.length;
+        }
     }
 }
 
-function ManejarCheckBox()
+function ManejarCheckBox()//Funcion que maneja los checkbox
 {
     let check = ($divCheckBoxFiltros.querySelectorAll(".checkBoxFiltro"));
 

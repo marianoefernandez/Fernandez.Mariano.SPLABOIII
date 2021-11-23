@@ -78,8 +78,6 @@ export function CrearAnuncios(lista)
                     $il.appendChild($img);
                     $il.appendChild($span);
 
-                    console.log($il);
-
                     $ul.appendChild($il);
                 }
                     break;
